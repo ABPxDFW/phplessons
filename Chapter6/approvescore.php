@@ -16,7 +16,7 @@ require_once('authorize.php');
         <link rel="stylesheet" type="text/css" href="style.css" />
     </head>
     <body>
-    <h2>Guitar Wars - Remove a High Score</h2>
+    <h2>Guitar Wars - Approve a High Score</h2>
 
         <?php
             require_once('appvars.php');
@@ -29,8 +29,8 @@ require_once('authorize.php');
 
                     // Approve the score by setting the approved column in the database
 
-                    $query = "UPDATE guitarwars SET approved = 1 WHERE id = '$id'";
-                    mysqli_query($dbc, $query);
+                    $query = "UPDATE guitarwars SET approved=1 WHERE id='$id'";
+                    mysqli_query($dbc, $query) or die("failed to run query");
                     mysqli_close($dbc);
 
                     // Confirm success with the user
