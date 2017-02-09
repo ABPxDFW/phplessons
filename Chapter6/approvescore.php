@@ -22,6 +22,10 @@ require_once('authorize.php');
             require_once('appvars.php');
             require_once('connectvars.php');
 
+            $score = $_GET['score'];
+            $id = $_GET['id'];
+            $name = $_GET['name'];
+
             if(isset($_POST['submit'])) {
                 if($_POST['confirm'] == 'Yes') {
                     // Connect to the database

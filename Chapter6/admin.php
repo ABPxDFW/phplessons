@@ -28,6 +28,7 @@
 
             // Loop through the array of score data, formatting it as HTML
             echo '<table>';
+            echo '<tr><th>Name</th><th>Date</th><th>Score</th><th>Action</th></tr>';
 
             while ($row = mysqli_fetch_array($data)) {
                 // Display the score data
@@ -38,7 +39,7 @@
                   '&amp;name=' . $row['name'] . '&amp;score=' . $row['score'] .
                   '&amp;screenshot=' . $row['screenshot'] . '">Remove</a>';
 
-                if($row['approved'] == 0) {
+                if($row['approved'] == '0') {
                     echo '/<a href="approvescore.php?id=' . $row['id'] . '&amp;date=' . $row['date'] . '&amp;name=' .
                         $row['name'] . '&amp;score=' . $row['score'] . '&amp;screenshot=' . $row['screenshot'].'">Approve</a>';
                 }
