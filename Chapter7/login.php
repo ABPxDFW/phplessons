@@ -17,7 +17,7 @@
 
 
     // Connect to the database
-    $dbc = mysqli_connected(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
+    $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 
     // Grab the user-entered log-in data
     $user_username = mysqli_real_escape_string($dbc, trim($_SERVER['PHP_AUTH_USER']));
