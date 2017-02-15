@@ -77,12 +77,12 @@
 
                         if (!empty($new_picture)) {
                             $query = "UPDATE mismatch_user SET first_name = '$first_name', last_name = '$last_name', gender = '$gender', " .
-                            " birthdate = '$birthdate', city = '$city', state = '$state', picture = '$new_picture' WHERE user_id = '$user_id'";
+                            " birthdate = '$birthdate', city = '$city', state = '$state', picture = '$new_picture' WHERE user_id = '" . $_COOKIE['user_id'] . "'";
                         }
 
                         else {
                             $query = "UPDATE mismatch_user SET first_name = '$first_name', last_name = '$last_name', gender = '$gender', " .
-                            " birthdate = '$birthdate', city = '$city', state = '$state' WHERE user_id = '$user_id'";
+                            " birthdate = '$birthdate', city = '$city', state = '$state' WHERE user_id = '" . $_COOKIE['user_id'] . "'";
                         }
 
                         mysqli_query($dbc, $query);
@@ -102,7 +102,7 @@
 
             else {
                 // Grab the profile data from the database
-                $query = "SELECT first_name, last_name, gender, birthdate, city, state, picture FROM mismatch_user WHERE user_id = '$user_id'";
+                $query = "SELECT first_name, last_name, gender, birthdate, city, state, picture FROM mismatch_user WHERE user_id = '" . $_COOKIE['user_id'] . "'";
                 $data = mysqli_query($dbc, $query);
                 $row = mysqli_fetch_array($data);
 

@@ -20,6 +20,7 @@
             // Grab the user-entered log-in data
             $user_username = mysqli_real_escape_string($dbc, trim($_POST['username']));
             $user_password = mysqli_real_escape_string($dbc, trim($_POST['password']));
+            $user_userid = mysqli_real_escape_string($dbc, trim($_POST['user_id']));
 
             if(!empty($user_username) && !empty($user_password)) {
 
