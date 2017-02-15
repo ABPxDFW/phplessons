@@ -26,7 +26,7 @@
                 // Look up the username and password in the database
                 $query = "SELECT user_id, username FROM mismatch_user WHERE username = '$user_username' AND password = SHA('$user_password')";
 
-                $data = msqli_query($dbc, $query);
+                $data = mysqli_query($dbc, $query);
 
                 if(mysqli_num_rows($data) == 1) {
 
