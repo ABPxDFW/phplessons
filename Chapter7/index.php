@@ -23,8 +23,8 @@
 
     else {
 
-        echo '&#10084; <a href="viewprofile.php">View Profile</a><br />';
-        echo '&#10084; <a href="editprofile.php">Edit Profile</a>';
+        echo '&#10084; <a href="login.php">Log In</a><br />';
+        echo '&#10084; <a href="signup.php">Sign Up</a>';
     }
 
 
