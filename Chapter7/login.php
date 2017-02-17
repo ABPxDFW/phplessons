@@ -7,10 +7,12 @@
  */
     require_once('connectvars.php');
 
+    session_start();
+
     // Clear the error message
     $error_msg = "";
 
-    if(!isset($_COOKIE['user_id'])) {
+    if(!isset($_SESSION['user_id'])) {
 
         if (isset($_POST['submit'])) {
 
@@ -34,8 +36,8 @@
                     // The log-in is OK so set the user ID and username cookies, and redirect to the home page
                     $row = mysqli_fetch_array($data);
 
-                    setcookie('user_id', $row['user_id']);
-                    setcookie('username', $row['username']);
+                    $_SESSION['user_id'] = $row['user_id']);
+                    $_SESSION['user_name'] = $row['username']);
                     $home_url = 'http://' . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']) . '/index.php';
                     header('Location: ' . $home_url);
                 }
