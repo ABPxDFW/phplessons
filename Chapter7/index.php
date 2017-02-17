@@ -10,15 +10,18 @@
   <h3>Mismatch - Where opposites attract!</h3>
 
 <?php
+
+    session_start();
+
     require_once('appvars.php');
     require_once('connectvars.php');
 
     // Generate the navigation menu
-    if(isset($_COOKIE['username'])){
+    if(isset($_SESSION['username'])){
 
         echo '&#10084; <a href="viewprofile.php">View Profile</a><br />';
         echo '&#10084; <a href="editprofile.php">Edit Profile</a><br />';
-        echo '&#10084; <a href="logout.php">Log Out (' . $_COOKIE['username'] . ')</a>';
+        echo '&#10084; <a href="logout.php">Log Out (' . $_SESSION['username'] . ')</a>';
     }
 
     else {
