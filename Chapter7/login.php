@@ -22,7 +22,6 @@
             // Grab the user-entered log-in data
             $user_username = mysqli_real_escape_string($dbc, trim($_POST['username']));
             $user_password = mysqli_real_escape_string($dbc, trim($_POST['password']));
-            $user_userid = mysqli_real_escape_string($dbc, trim($_POST['user_id']));
 
             if(!empty($user_username) && !empty($user_password)) {
 
@@ -38,6 +37,8 @@
 
                     $_SESSION['user_id'] = $row['user_id']);
                     $_SESSION['user_name'] = $row['username']);
+                    setcookie('user_id', $row['user_id'], time() + (60 * 60 * 24 * 30));    // expires in 30 days
+                    setcookie('username', $row['username'], time() + (60 * 60 * 24 * 30));  // expires in 30 days
                     $home_url = 'http://' . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']) . '/index.php';
                     header('Location: ' . $home_url);
                 }
