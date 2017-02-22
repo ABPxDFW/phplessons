@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 /**
  * Created by PhpStorm.
  * User: abpxninja
@@ -7,7 +9,7 @@
  */
     require_once('connectvars.php');
 
-    session_start();
+
 
     // Clear the error message
     $error_msg = "";
@@ -35,8 +37,8 @@
                     // The log-in is OK so set the user ID and username cookies, and redirect to the home page
                     $row = mysqli_fetch_array($data);
 
-                    $_SESSION['user_id'] = $row['user_id']);
-                    $_SESSION['user_name'] = $row['username']);
+                    $_SESSION['user_id'] = $row['user_id'];
+                    $_SESSION['user_name'] = $row['username'];
                     setcookie('user_id', $row['user_id'], time() + (60 * 60 * 24 * 30));    // expires in 30 days
                     setcookie('username', $row['username'], time() + (60 * 60 * 24 * 30));  // expires in 30 days
                     $home_url = 'http://' . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']) . '/index.php';
@@ -92,7 +94,7 @@
 
             else {
 
-                // Confirm the successfl log in
+                // Confirm the successful log in
                 echo('<p class="login">You are logged in as ' . $_COOKIE['username'] . '.</p>');
             }
         ?>
