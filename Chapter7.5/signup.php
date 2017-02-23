@@ -39,12 +39,12 @@
             if(mysqli_num_rows($data) == 0) {
 
                 // The username is unique, so insert the data into the database
-                $queiry = "INSERT INTO mismatch_user (username, password, join_date) VALUES ('$username', SHA('$password1'), NOW())";
+                $query = "INSERT INTO mismatch_user (username, password, join_date) VALUES ('$username', SHA('$password1'), NOW())";
 
                 mysqli_query($dbc, $query);
 
                 // Confirm success with the user
-                echo '<a>Your new account has been successfully created. You\'re now ready to log in and <a href=""editprofile.php">edit your profile</a></p>';
+                echo '<a>Your new account has been successfully created. You\'re now ready to log in and <a href="editprofile.php">edit your profile</a></p>';
 
                 mysqli_close($dbc);
                 exit();
