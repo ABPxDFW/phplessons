@@ -27,6 +27,7 @@ session_start();
 
             if(!empty($user_username) && !empty($user_password)) {
 
+
                 // Look up the username and password in the database
                 $query = "SELECT user_id, username FROM mismatch_user WHERE username = '$user_username' AND password = SHA('$user_password')";
 
@@ -38,7 +39,7 @@ session_start();
                     $row = mysqli_fetch_array($data);
 
                     $_SESSION['user_id'] = $row['user_id'];
-                    $_SESSION['user_name'] = $row['username'];
+                    $_SESSION['username'] = $row['username'];
                     setcookie('user_id', $row['user_id'], time() + (60 * 60 * 24 * 30));    // expires in 30 days
                     setcookie('username', $row['username'], time() + (60 * 60 * 24 * 30));  // expires in 30 days
                     $home_url = 'http://' . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']) . '/index.php';
@@ -95,7 +96,7 @@ session_start();
             else {
 
                 // Confirm the successful log in
-                echo('<p class="login">You are logged in as ' . $_COOKIE['username'] . '.</p>');
+                echo('<p class="login">You are logged in as ' . $_SESSION['username'] . '.</p>');
             }
         ?>
 

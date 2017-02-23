@@ -1,5 +1,4 @@
 <?php
-
     session_start();
 
     // If the session vars aren't set, try to set them with a cookie
@@ -27,6 +26,8 @@
 
         require_once('appvars.php');
         require_once('connectvars.php');
+
+
 
         // Generate the navigation menu
         if(isset($_SESSION['username'])){
