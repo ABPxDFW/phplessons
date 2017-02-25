@@ -90,3 +90,6 @@
     <input type="submit" value="Sign Up" name="submit" />
 
 </form>
+<?php
+    require_once('footer.php');
+?>
