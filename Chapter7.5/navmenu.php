@@ -22,4 +22,5 @@
         echo '<a href="signup.php">Sign Up</a>';
     }
 
+    echo '<hr />';
 ?>
