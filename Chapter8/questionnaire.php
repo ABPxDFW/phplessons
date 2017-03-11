@@ -34,7 +34,7 @@
     if(mysqli_num_rows($data) == 0) {
 
         // First grab the list of topic IDs from the topic table
-        $query = "SELECT topic_id FROM mismatch_topic ORDER BY category_id, topic_id";
+        $query = "SELECT topic_id FROM mismatch_topic ORDER BY category, topic_id";
         $data = mysqli_query($dbc, $query);
         $topicIDs = array();
 
