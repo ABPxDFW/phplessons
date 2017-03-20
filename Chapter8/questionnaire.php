@@ -34,7 +34,7 @@
     if(mysqli_num_rows($data) == 0) {
 
         // First grab the list of topic IDs from the topic table
-        $query = "SELECT topic_id FROM mismatch_topic ORDER BY category, topic_id";
+        $query = "SELECT topic_id FROM mismatch_topic ORDER BY category_id, topic_id";
         $data = mysqli_query($dbc, $query);
         $topicIDs = array();
 
@@ -63,7 +63,11 @@
     }
 
     // Grab the response data from the database to generate the form
-    $query = "SELECT response_id, topic_id, response FROM mismatch_response WHERE user_id = '" . $_SESSION['user_id'] . "'";
+    $query = "SELECT mr.response_id, mr.topic_id, mr.response, mt.name AS topic_name, mc.name AS category_name " .
+        "FROM mismatch_response AS mr " .
+        "INNER JOIN mismatch_topic AS mt USING (topic_id) " .
+        "INNER JOIN mismatch_category AS mc USING (category_id) " .
+        "WHERE mr.user_id = '" . $_SESSION['user_id'] . "'";
 
     $data = mysqli_query($dbc, $query);
     $responses = array();
