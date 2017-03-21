@@ -28,14 +28,14 @@
 
     // Only look for a mismatch if the user has questionnaire responses stored
     $query = "SELECT * FROM mismatch_response WHERE user_id ='" . $_SESSION['user_id'] . "'";
-    $data = mysqli_query($dbc, $query);
+    $data = mysqli_query($dbc, $query) or die ("Select statement at line 31 failed");
     if (mysqli_num_rows($data) != 0) {
         // First grab the user's responses from the response table (JOIN to get the topic name)
         $query = "SELECT mr.response_id, mr.topic_id, mr.response, mt.name AS topic_name " .
             "FROM mismatch_response AS mr " .
             "INNER JOIN mismatch_topic AS mt USING (topic_id) " .
             "WHERE mr.user_id = '" . $_SESSION['user_id'] . "'";
-        $data = mysqli_query($dbc, $query);
+        $data = mysqli_query($dbc, $query) or die ("Select statement at line 38 failed");
         $user_responses = array();
         while ($row = mysqli_fetch_array($data)) {
             array_push($user_responses, $row);
@@ -48,11 +48,11 @@
 
         // Loop through the user table comparing other people's responses to the user's responses
         $query = "SELECT user_id FROM mismatch_user WHERE user_id != '" . $_SESSION['user_id'] . "'";
-        $data = mysqli_query($dbc, $query);
+        $data = mysqli_query($dbc, $query) or die ("Select statement at line 51 failed");
         while ($row = mysqli_fetch_array($data)) {
             // Grab the response data for the user (a potential mismatch)
             $query2 = "SELECT response_id, topic_id, response FROM mismatch_response WHERE user_id = '" . $row['user_id'] . "'";
-            $data2 = mysqli_query($dbc, $query2);
+            $data2 = mysqli_query($dbc, $query2) or die ("Select statement at line 55 failed");
             $mismatch_responses = array();
             while ($row2 = mysqli_fetch_array($data2)) {
                 array_push($mismatch_responses, $row2);
@@ -61,7 +61,7 @@
             // Compare each response and calculate a mismatch total
             $score = 0;
             $topics = array();
-            for ($i = 0; $i < count($user_responses); $i++) {
+            for ($i = 0; $i < count($user_responses) && !empty($mismatch_responses); $i++) {
                 if ($user_responses[$i]['response'] + $mismatch_responses[$i]['response'] == 3) {
                     $score += 1;
                     array_push($topics, $user_responses[$i]['topic_name']);
@@ -80,7 +80,7 @@
         // Make sure a mismatch was found
         if ($mismatch_user_id != -1) {
             $query = "SELECT username, first_name, last_name, city, state, picture FROM mismatch_user WHERE user_id = '$mismatch_user_id'";
-            $data = mysqli_query($dbc, $query);
+            $data = mysqli_query($dbc, $query) or die ("Select statement at line 83 failed");
             if (mysqli_num_rows($data) == 1) {
                 // The user row for the mismatch was found, so display the user data
                 $row = mysqli_fetch_array($data);

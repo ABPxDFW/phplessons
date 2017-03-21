@@ -29,13 +29,13 @@
 
     // If this user has never answered the questionnaire, insert empty responses into the database
     $query = "SELECT * FROM mismatch_response WHERE user_id = '" . $_SESSION['user_id'] . "'";
-    $data = mysqli_query($dbc, $query);
+    $data = mysqli_query($dbc, $query) or die ("Select statement at line 32 failed");
 
     if(mysqli_num_rows($data) == 0) {
 
         // First grab the list of topic IDs from the topic table
         $query = "SELECT topic_id FROM mismatch_topic ORDER BY category_id, topic_id";
-        $data = mysqli_query($dbc, $query);
+        $data = mysqli_query($dbc, $query) or die ("Select statement at line 38 failed");
         $topicIDs = array();
 
         while($row = mysqli_fetch_array($data)) {
@@ -45,7 +45,7 @@
         // Insert empty response rows into the response table, one per topic
         foreach($topicIDs as $topic_id) {
             $query = "INSERT INTO mismatch_response(user_id, topic_id) VALUES ('" . $_SESSION['user_id'] . "', '$topic_id')";
-            mysqli_query($dbc, $query);
+            mysqli_query($dbc, $query) or die ("insert statement at line 48 failed");
         }
     }
 
@@ -69,19 +69,19 @@
         "INNER JOIN mismatch_category AS mc USING (category_id) " .
         "WHERE mr.user_id = '" . $_SESSION['user_id'] . "'";
 
-    $data = mysqli_query($dbc, $query);
+    $data = mysqli_query($dbc, $query) or die ("Select statement at line 72 failed");;
     $responses = array();
 
     while($row = mysqli_fetch_array($data)) {
 
         // Look up the topic name for the response from the topic table
-        $query2 = "SELECT name, category FROM  mismatch_topic WHERE topic_id = '" . $row['topic_id'] . "'";
+        $query2 = "SELECT name, category_id FROM  mismatch_topic WHERE topic_id = '" . $row['topic_id'] . "'";
 
-        $data2 = mysqli_query($dbc, $query2);
+        $data2 = mysqli_query($dbc, $query2) or die ("Select statement at line 80 failed");
         if(mysqli_num_rows($data2) == 1) {
             $row2 = mysqli_fetch_array($data2);
             $row['topic_name'] = $row2['name'];
-            $row['category_name'] = $row2['category'];
+            $row['category_name'] = $row2['category_id'];
             array_push($responses, $row);
         }
     }
@@ -103,7 +103,7 @@
 
         // Display the topic form field
         echo '<label ' . ($response['response'] == NULL ? 'class="error"' : '') . ' for="' .
-            $response['$response_id'] . '">' . $response['topic_name'] . ':</label>';
+            $response['response_id'] . '">' . $response['topic_name'] . ':</label>';
         echo '<input type="radio" id="' . $response['response_id'] . '" name="' .
             $response['response_id'] . '" value="1" ' .
             ($response['response'] == 1 ? 'checked="checked"' : '') . ' />Love ';
