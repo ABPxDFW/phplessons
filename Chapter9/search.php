@@ -31,25 +31,45 @@
     // Query to get the results
 
     $search_query="SELECT * FROM riskyjobs";
-    $where_list = array();
     $user_search = $_GET['usersearch'];
-    $search_words = explode(' ', $user_search);
-    foreach($search_words as $word) {
-        $where_list[] = "description like '%$word%'";
+
+    // Extract the search keywords into an array
+    $clean_search = str_replace(',',' ',$user_search);
+    $search_words = explode(' ', $clean_search);
+
+    $final_search_words = array();
+    if(count($search_words) > 0) {
+        foreach($search_words as $word) {
+            if(!empty($word)) {
+                $final_search_words[] = $word;
+            }
+        }
     }
+
+    // Generate a WHERE clause using all of the search keywords
+    $where_list = array();
+    if(count($final_search_words) > 0) {
+        foreach($final_search_words as $word) {
+            $where_list[] = "description LIKE '%$word%'";
+        }
+    }
+
     $where_clause = implode(' OR ', $where_list);
 
+    // Add the keyword WHERE clause to the search query
     if(!empty($where_clause)) {
         $search_query .= " WHERE $where_clause";
     }
 
+
+    //echo $search_query;
     $result = mysqli_query($dbc, $search_query) or die ("Unable to execute query");
     while ($row = mysqli_fetch_array($result)) {
         echo '<tr class="results">';
         echo '<td valign="top" width="20%">' . $row['title'] . '</td>';
-        echo '<td valign="top" width="50%">' . $row['description'] . '</td>';
+        echo '<td valign="top" width="50%">' . substr($row['description'], 0, 100) . '...</td>';
         echo '<td valign="top" width="10%">' . $row['state'] . '</td>';
-        echo '<td valign="top" width="20%">' . $row['date_posted'] . '</td>';
+        echo '<td valign="top" width="20%">' . substr($row['date_posted'], 0, 10) . '</td>';
         echo '</tr>';
     }
     echo '</table>';
