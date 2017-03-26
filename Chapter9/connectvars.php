@@ -1,7 +1,7 @@
 <?php
   // Define database connection constants
-  define('DB_HOST', 'data.riskyjobs.biz');
-  define('DB_USER', 'admin');
-  define('DB_PASSWORD', 'danger');
-  define('DB_NAME', 'riskyjobs');
+define('DB_HOST', 'localhost');
+define('DB_USER', 'ABPxNiNjA');
+define('DB_PASSWORD', 'test');
+define('DB_NAME', 'chapter9');
 ?>
