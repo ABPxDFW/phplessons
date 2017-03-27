@@ -30,37 +30,43 @@
 
     // Query to get the results
 
-    $search_query="SELECT * FROM riskyjobs";
-    $user_search = $_GET['usersearch'];
+    function build_query ($user_search)
+    {
+        $search_query = "SELECT * FROM riskyjobs";
+        $user_search = $_GET['usersearch'];
 
-    // Extract the search keywords into an array
-    $clean_search = str_replace(',',' ',$user_search);
-    $search_words = explode(' ', $clean_search);
+        // Extract the search keywords into an array
+        $clean_search = str_replace(',', ' ', $user_search);
+        $search_words = explode(' ', $clean_search);
 
-    $final_search_words = array();
-    if(count($search_words) > 0) {
-        foreach($search_words as $word) {
-            if(!empty($word)) {
-                $final_search_words[] = $word;
+        $final_search_words = array();
+        if (count($search_words) > 0) {
+            foreach ($search_words as $word) {
+                if (!empty($word)) {
+                    $final_search_words[] = $word;
+                }
             }
         }
-    }
 
-    // Generate a WHERE clause using all of the search keywords
-    $where_list = array();
-    if(count($final_search_words) > 0) {
-        foreach($final_search_words as $word) {
-            $where_list[] = "description LIKE '%$word%'";
+        // Generate a WHERE clause using all of the search keywords
+        $where_list = array();
+        if (count($final_search_words) > 0) {
+            foreach ($final_search_words as $word) {
+                $where_list[] = "description LIKE '%$word%'";
+            }
         }
+
+        $where_clause = implode(' OR ', $where_list);
+
+        // Add the keyword WHERE clause to the search query
+        if (!empty($where_clause)) {
+            $search_query .= " WHERE $where_clause";
+        }
+
+        return $search_query;
     }
 
-    $where_clause = implode(' OR ', $where_list);
-
-    // Add the keyword WHERE clause to the search query
-    if(!empty($where_clause)) {
-        $search_query .= " WHERE $where_clause";
-    }
-
+    $search_query = build_query($user_search);
 
     //echo $search_query;
     $result = mysqli_query($dbc, $search_query) or die ("Unable to execute query");
