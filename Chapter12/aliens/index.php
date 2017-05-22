@@ -28,7 +28,7 @@
   if (mysqli_num_rows($data) == 1) {
     // Show the details for this single abduction
     $row = mysqli_fetch_array($data);
-    echo '<p><strong>Name: </strong>' . $row['first_name'] . ' ' . $row[last_name] . '<br />';
+    echo '<p><strong>Name: </strong>' . $row['first_name'] . ' ' . $row['last_name'] . '<br />';
     echo '<strong>Date:</strong> ' . $row['when_it_happened'] . '<br />';
     echo '<strong>Email:</strong> ' . $row['email'] . '<br />';
     echo '<strong>Abducted for:</strong> ' . $row['how_long'] . '<br />';
@@ -46,7 +46,7 @@
     echo '<table width="100%">';
     while ($row = mysqli_fetch_array($data)) { 
       // Display each row as a table row
-      echo '<tr class="heading"><td colspan="3"><a href="index.php?abduction_id=' . $row['abduction_id'] . '">' . $row['when_it_happened'] . ' : ' . $row['first_name'] . ' ' . $row[last_name] . '</a></td></tr>';
+      echo '<tr class="heading"><td colspan="3"><a href="index.php?abduction_id=' . $row['abduction_id'] . '">' . $row['when_it_happened'] . ' : ' . $row['first_name'] . ' ' . $row['last_name'] . '</a></td></tr>';
       echo '<tr><td><strong>Abducted for:</strong><br /> ' . $row['how_long'];
       echo '<td><strong>Alien description:</strong><br /> ' . $row['alien_description'];
       echo '<td><strong>Fang spotted:</strong><br /> ' . $row['fang_spotted'] . '</td></tr>';
